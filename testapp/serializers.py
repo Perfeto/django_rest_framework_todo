@@ -9,7 +9,7 @@ class ToDoTaskSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ToDoTask
-        fields = ['id', 'title', 'description', 'owner', 'change_date']
+        fields = ['id', 'title', 'description', 'owner', 'change_date', 'status']
 
 
 class UserSerializer(serializers.ModelSerializer):

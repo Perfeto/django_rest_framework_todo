@@ -12,3 +12,4 @@ class ToDoTask(models.Model):
         related_name='to_do_list',
         on_delete=models.CASCADE
     )
+    status = models.IntegerField()
