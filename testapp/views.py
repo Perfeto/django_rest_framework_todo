@@ -1,10 +1,11 @@
-from rest_framework import generics
+from django.contrib.auth.models import User
+from rest_framework import generics, permissions
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from testapp.models import ToDoTask
-from testapp.serializers import ToDoTaskSerializer
+from testapp.serializers import ToDoTaskSerializer, UserRegistrationSerializer
 
 
 class HelloView(APIView):
@@ -38,10 +39,12 @@ class ToDoItemDetail(generics.RetrieveUpdateDestroyAPIView):
 
 ########################################################################################################################
 
-# class UserList(generics.ListCreateAPIView):
-#     queryset = User.objects.all()
-#     serializer_class = UserSerializer
-#
+class UserCreate(generics.CreateAPIView):
+    permission_classes = [
+        permissions.AllowAny
+    ]
+    serializer_class = UserRegistrationSerializer
+
 #
 # class UserDetail(generics.RetrieveAPIView):
 #     queryset = User.objects.all()

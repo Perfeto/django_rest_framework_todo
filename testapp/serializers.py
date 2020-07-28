@@ -13,8 +13,31 @@ class ToDoTaskSerializer(serializers.ModelSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
-    to_do_items = serializers.PrimaryKeyRelatedField(many=True, queryset=ToDoTask.objects.all())
+    to_do_list = serializers.PrimaryKeyRelatedField(
+        many=True,
+        queryset=ToDoTask.objects.all(),
+        required=False
+    )
 
     class Meta:
         model = User
-        fields = ['id', 'username', 'to_do_items']
+        fields = ['id', 'username', 'password', 'to_do_list']
+
+
+class UserRegistrationSerializer(serializers.ModelSerializer):
+
+    def create(self, validated_data):
+        user = User.objects.create(
+            username=validated_data['username']
+        )
+        user.set_password(validated_data['password'])
+        user.save()
+
+        return user
+
+    class Meta:
+        model = User
+        fields = ['username', 'password']
+        extra_kwargs = {
+            'password': {'write_only': True}
+        }
