@@ -41,8 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'testapp',
+    'telegrambot',
     'corsheaders',
-    'telegrambot'
 ]
 
 MIDDLEWARE = [
@@ -162,3 +162,5 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_LIFETIME': timedelta(minutes=0),
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=0),
 }
+
+TELEGRAM_BOT_API_KEY = '893557447:AAFYrMBOWXvABNC6mKOCe3mPzIf1SrnFKmY'
