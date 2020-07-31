@@ -30,7 +30,7 @@ class ToDoItemsList(generics.ListCreateAPIView):
 
     def perform_create(self, serializer: ToDoTaskSerializer):
         serializer.save(owner=self.request.user)
-        saved_to_do_task =\
+        saved_to_do_task = \
             ToDoTask.objects.filter(id=serializer.data.get('id')).first()
 
         telegram_user = \

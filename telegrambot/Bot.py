@@ -1,5 +1,6 @@
+import telegram
 from telegram import Bot, Update
-from telegram.ext import CallbackContext, MessageHandler, Filters, Updater, CommandHandler
+from telegram.ext import CallbackContext, Updater, CommandHandler
 from telegram.utils.request import Request
 
 from django_movie import settings
@@ -32,8 +33,8 @@ class TelegramBot:
         command_handler_get_to_do_list = CommandHandler('get_todo_list', callback=get_list_todos)
         self.updater.dispatcher.add_handler(command_handler_get_to_do_list)
 
-        command_handler_get_to_do_list2 = MessageHandler(Filters.text, do_echo)
-        self.updater.dispatcher.add_handler(command_handler_get_to_do_list2)
+        command_handler_get_chat_id = CommandHandler('start', callback=return_chat_id)
+        self.updater.dispatcher.add_handler(command_handler_get_chat_id)
 
         # 3 -- run endless loop
         self.updater.start_polling()
@@ -57,14 +58,13 @@ def log_errors(f):
 
 
 @log_errors
-def do_echo(update: Update, context: CallbackContext):
+def return_chat_id(update: Update, context: CallbackContext):
     chat_id = update.message.chat_id
-    text = update.message.text
 
-    reply_text = "Your ID = {}\n\n{}".format(chat_id, text)
-    print(f'{15 * "="} START {15 * "="}\n{reply_text}\n{15 * "="}  END  {15 * "="}')
+    reply_text = "\nYour chat_id is:\n<b>{}</b>\n".format(chat_id)
     update.message.reply_text(
-        text=reply_text
+        text=reply_text,
+        parse_mode=telegram.ParseMode.HTML
     )
 
 
