@@ -6,9 +6,7 @@ from testapp.serializers import ToDoTaskSerializer
 
 def get_todo_tasks_for_user(owner_id: int):
     to_do_items_list = ToDoTask.objects.filter(owner_id=owner_id)
-    serializer = ToDoTaskSerializer(instance=to_do_items_list, many=True)
-    return_data = serializer.data
-    return return_data
+    return to_do_items_list
 
 
 def on_task_created_telegram_notify(task_id: int):
