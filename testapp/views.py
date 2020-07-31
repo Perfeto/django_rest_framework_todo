@@ -1,22 +1,15 @@
 from rest_framework import generics, permissions
-from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.response import Response
 
 from testapp.models import ToDoTask
 from testapp.serializers import ToDoTaskSerializer, UserRegistrationSerializer
 from testapp.services.ToDoTaskService import get_todo_tasks_for_user, on_task_created_telegram_notify
 
 
-class ProductPagination(PageNumberPagination):
-    page_size = 5
-
-
 class ToDoItemsList(generics.ListCreateAPIView):
     queryset = ToDoTask.objects.all()
     serializer_class = ToDoTaskSerializer
     permission_classes = [IsAuthenticated]
-    pagination_class = ProductPagination
 
     def get_queryset(self):
         user_tasks = get_todo_tasks_for_user(self.request.user.pk)
