@@ -13,3 +13,8 @@ class ToDoTask(models.Model):
         on_delete=models.CASCADE
     )
     status = models.IntegerField()
+
+    def __str__(self):
+        return f'title = {self.title}\n' \
+               f'description = {self.description}\n' \
+               f'status = {self.status}'

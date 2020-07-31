@@ -21,7 +21,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['id', 'username', 'password', 'to_do_list']
+        fields = ['id', 'username', 'password', 'to_do_list', ]
 
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
