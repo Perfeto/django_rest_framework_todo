@@ -8,7 +8,7 @@ from telegrambot.models import TelegramProfile
 from testapp.models import ToDoTask
 
 
-class TelegramBot:
+class ServiceTelegramBot:
     # 1 -- right connection
     request = Request(
         connect_timeout=0.5,
@@ -26,7 +26,7 @@ class TelegramBot:
 
     def __new__(cls):
         if not hasattr(cls, 'instance'):
-            cls.instance = super(TelegramBot, cls).__new__(cls)
+            cls.instance = super(ServiceTelegramBot, cls).__new__(cls)
         return cls.instance
 
     def start_bot(self):

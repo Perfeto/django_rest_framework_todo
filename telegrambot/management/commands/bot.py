@@ -1,6 +1,6 @@
 from django.core.management import BaseCommand
 
-from telegrambot.Bot import TelegramBot
+from telegrambot.services.ServiceTelegramBot import ServiceTelegramBot
 
 
 class Command(BaseCommand):

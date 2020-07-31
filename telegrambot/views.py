@@ -2,7 +2,7 @@
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 
-from telegrambot.Bot import TelegramBot
+from telegrambot.services.ServiceTelegramBot import ServiceTelegramBot
 from telegrambot.models import TelegramProfile
 from telegrambot.serializers import TelegramProfileCreateSerializer
 

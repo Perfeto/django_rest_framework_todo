@@ -3,7 +3,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from telegrambot.Bot import TelegramBot
+from telegrambot.services.ServiceTelegramBot import ServiceTelegramBot
 from telegrambot.models import TelegramProfile
 from testapp.models import ToDoTask
 from testapp.serializers import ToDoTaskSerializer, UserRegistrationSerializer
