@@ -1,20 +1,10 @@
 from rest_framework import generics, permissions
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from rest_framework.views import APIView
 
-from telegrambot.services.ServiceTelegramBot import ServiceTelegramBot
-from telegrambot.models import TelegramProfile
 from testapp.models import ToDoTask
 from testapp.serializers import ToDoTaskSerializer, UserRegistrationSerializer
-
-
-class HelloView(APIView):
-    permission_classes = [IsAuthenticated]
-
-    def get(self, request):
-        content = {'message': 'Hello, World! Nice to meat you, ' + str(request.user)}
-        return Response(content)
+from testapp.services.ToDoTaskService import get_todo_tasks_for_user, on_task_created_telegram_notify
 
 
 class ToDoItemsList(generics.ListCreateAPIView):
@@ -23,20 +13,12 @@ class ToDoItemsList(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request, *args, **kwargs):
-        to_do_items_list = ToDoTask.objects.filter(owner=request.user)
-        serializer = ToDoTaskSerializer(instance=to_do_items_list, many=True)
-        return_data = serializer.data
-        return Response(return_data)
+        user_tasks = get_todo_tasks_for_user(self.request.user.pk)
+        return Response(user_tasks)
 
     def perform_create(self, serializer: ToDoTaskSerializer):
         serializer.save(owner=self.request.user)
-        saved_to_do_task = \
-            ToDoTask.objects.filter(id=serializer.data.get('id')).first()
-
-        telegram_user = \
-            TelegramProfile.objects.filter(user_id=self.request.user.pk).first()
-
-        TelegramBot().send_text_to_telegram(saved_to_do_task.__str__(), telegram_user.external_id)
+        on_task_created_telegram_notify(serializer.data.get('id'))
 
 
 class ToDoItemDetail(generics.RetrieveUpdateDestroyAPIView):
