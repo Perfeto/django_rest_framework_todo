@@ -17,4 +17,4 @@ class TelegramProfileCreate(generics.CreateAPIView):
         telegram_user = \
             TelegramProfile.objects.filter(user_id=self.request.user.pk).first()
 
-        TelegramBot().send_text_to_telegram("Hi, i am your todo bot!", telegram_user.external_id)
+        ServiceTelegramBot().send_text_to_telegram("Hi, i am your todo bot!", telegram_user.external_id)

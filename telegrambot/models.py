@@ -3,12 +3,13 @@ from django.db import models
 
 
 class TelegramProfile(models.Model):
-    user = models.OneToOneField(
+    user = models.ForeignKey(
         to='auth.User',
         on_delete=models.CASCADE
     )
     external_id = models.PositiveIntegerField(
-        verbose_name='ID user in tg'
+        verbose_name='ID user in tg',
+        unique=True
     )
     name = models.TextField(
         verbose_name='User name'
